@@ -114,5 +114,11 @@
   <ItemGroup>
     <Resource Include="Needle.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="InterruptionHandling\fire.txt" />
+    <Resource Include="InterruptionHandling\human_entered.txt" />
+    <Resource Include="InterruptionHandling\patient_conscious.txt" />
+    <Resource Include="InterruptionHandling\patient_dying.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

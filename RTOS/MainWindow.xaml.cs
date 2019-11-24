@@ -24,6 +24,8 @@ namespace RTOS
         const string path = "..\\Program.txt";
         const string log = "..\\Log.txt";
         const string human = "..\\Human.csv";
+        const string interruptionProgramsDir = "..\\..\\InterruptionHandling/";
+        Executor executor;
         public MainWindow()
         {
             InitializeComponent();
@@ -79,7 +81,49 @@ namespace RTOS
 
         private void Execute_Click(object sender, RoutedEventArgs e)
         {
-            new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1), Executed, this).Start();
+            executor = new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1), Executed, this);
+            executor.Start();
+        }
+
+        private void BtnFire_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInterrupt("fire");
+        }
+
+        private void BtnHumanEntered_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInterrupt("human_entered");
+        }
+
+        private void BtnPatientDying_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInterrupt("patient_dying");
+        }
+
+        private void BtnPatientConscious_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInterrupt("patient_conscious");
+
+        }
+
+        private void HandleInterrupt(string name)
+        {
+            if (executor == null)
+            {
+                return;
+            }
+
+            executor.Stop();
+
+            var program = LoadInterruptionProgram(name);
+            executor.LoadProgram(program);
+            executor.Start();
+        }
+
+        private string[] LoadInterruptionProgram(string name)
+        {
+            string str = File.ReadAllText(interruptionProgramsDir + name + ".txt");
+            return str.Split('\n', '\r').Where(s => s != "").ToArray();
         }
     }
 }

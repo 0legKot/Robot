@@ -14,7 +14,7 @@ namespace RTOS
 {
     public class Executor
     {
-        private string[] Commands { get; }
+        private string[] Commands { get; set; }
 
         private RichTextBox Log { get; }
         private readonly MainWindow main;
@@ -38,6 +38,17 @@ namespace RTOS
             LogText("Program started");
         }
 
+        public void LoadProgram(string[] commands)
+        {
+            if (Timer.IsEnabled)
+            {
+                throw new Exception("Execution in process");
+            }
+
+            Commands = commands;
+            CurrentIndex = 0;
+        }
+
         public void Stop()
         {
             Timer.Stop();
@@ -47,6 +58,7 @@ namespace RTOS
         private void LogText(string text)
         {
             Log.Document.Blocks.Add(new Paragraph(new Run(text)));
+            Log.ScrollToEnd();
         }
 
         private void Timer_Tick(object sender, EventArgs e)

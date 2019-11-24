@@ -32,6 +32,10 @@
             <Image x:Name="ImgHand" Height="100" Source="Hand.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="20"/>
 
         </Canvas>
+        <Button x:Name="BtnHumanEntered" Content="Human entered" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="223,676,0,0" Click="BtnHumanEntered_Click"/>
+        <Button x:Name="BtnPatientDying" Content="Patient state worsened" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="437,676,0,0" Click="BtnPatientDying_Click"/>
+        <Button x:Name="BtnPatientConscious" Content="Patient consious" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="653,676,0,0" Click="BtnPatientConscious_Click"/>
+        <Button x:Name="BtnFire" Content="FIRE" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="10,676,0,0" Click="BtnFire_Click"/>
 
     </Grid>
 </Window>
