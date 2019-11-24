@@ -48,6 +48,7 @@ namespace RTOS
 
             Commands.Push(commands);
             CurrentIndices.Push(0);
+            State = ExecutorState.Normal;
 
             Timer.Start();
         }
