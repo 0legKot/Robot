@@ -26,11 +26,13 @@
         <Canvas x:Name="MainCanvas" HorizontalAlignment="Left" Height="500" Margin="10,170,0,0" VerticalAlignment="Top" Width="1200" Grid.ColumnSpan="2">
             <Rectangle x:Name="HumanTable" Fill="#FFF7837E" Height="270" Canvas.Left="0" Stroke="Black" Canvas.Top="0" Width="910"/>
             <Rectangle x:Name="InstrumentsTable" Fill="#FFC4BDF0" Height="140" Canvas.Left="1020" Stroke="Black" Canvas.Top="120" Width="160"/>
-            <Image x:Name="ImgScalpel" Height="100" Source="Scalpel.png" Stretch="Fill" Width="40" Canvas.Left="1040" Canvas.Top="140"/>
-            <Image x:Name="ImgPatch" Height="100" Source="Patch.png" Stretch="Fill" Width="40" Canvas.Left="1080" Canvas.Top="140"/>
-            <Image x:Name="ImgNeedle" Height="100" Source="Needle.png" Stretch="Fill" Width="40" Canvas.Left="1120" Canvas.Top="140"/>
-            <Image x:Name="ImgHand" Height="100" Source="Hand.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="20"/>
-
+            <Image Panel.ZIndex="10" x:Name="ImgScalpel" Height="100" Source="Scalpel.png" Stretch="Fill" Width="40" Canvas.Left="1040" Canvas.Top="140"/>
+            <Image Panel.ZIndex="10" x:Name="ImgPatch" Height="100" Source="Patch.png" Stretch="Fill" Width="40" Canvas.Left="1080" Canvas.Top="140"/>
+            <Image Panel.ZIndex="10" x:Name="ImgNeedle" Height="100" Source="Needle.png" Stretch="Fill" Width="40" Canvas.Left="1120" Canvas.Top="140"/>
+            <Image Panel.ZIndex="10" x:Name="ImgHand" Height="100" Source="Hand.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="20"/>
+            <Image Panel.ZIndex="10" x:Name="ImgFire1" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="0" Canvas.Top="-32" Visibility="Hidden"/>
+            <Image Panel.ZIndex="10" x:Name="ImgFire2" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="250" Canvas.Top="-32" Visibility="Hidden"/>
+            <Image Panel.ZIndex="10" x:Name="ImgFire3" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="500" Canvas.Top="-32" Visibility="Hidden"/>
         </Canvas>
         <Button x:Name="BtnHumanEntered" Content="Human entered" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="223,676,0,0" Click="BtnHumanEntered_Click"/>
         <Button x:Name="BtnPatientDying" Content="Patient state worsened" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="437,676,0,0" Click="BtnPatientDying_Click"/>

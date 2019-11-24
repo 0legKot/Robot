@@ -87,6 +87,9 @@ namespace RTOS
 
         private void BtnFire_Click(object sender, RoutedEventArgs e)
         {
+            ImgFire1.Visibility = Visibility.Visible;
+            ImgFire2.Visibility = Visibility.Visible;
+            ImgFire3.Visibility = Visibility.Visible;
             HandleInterrupt("fire");
         }
 

@@ -120,5 +120,8 @@
     <Resource Include="InterruptionHandling\patient_conscious.txt" />
     <Resource Include="InterruptionHandling\patient_dying.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fire.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
