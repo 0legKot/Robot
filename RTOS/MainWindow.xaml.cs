@@ -21,10 +21,10 @@ namespace RTOS
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string path = "..\\Program.txt";
-        const string log = "..\\Log.txt";
-        const string human = "..\\Human.csv";
-        const string interruptionProgramsDir = "..\\..\\InterruptionHandling/";
+        const string path = ".\\Data\\Program.txt";
+        const string log = ".\\Data\\Log.txt";
+        const string human = ".\\Data\\Human.csv";
+        const string interruptionProgramsDir = "..\\InterruptionHandling/";
         Executor executor;
         public MainWindow()
         {

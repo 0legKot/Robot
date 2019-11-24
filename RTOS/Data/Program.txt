@@ -1,0 +1,89 @@
+﻿{
+
+for ($i from 1 to 6) {
+	move_down;
+};
+move_left;
+move_left;
+pick;
+for ($i from 1 to 52) {
+
+move_left;
+
+};
+for ($i from 1 to 7) {
+
+move_up;
+
+};
+for ($i from 1 to 45) {
+for ($j from 1 to 15) {
+while (get_damage_level > 2) {
+cut;
+};
+move_down;
+};
+move_right;
+for ($j from 1 to 15) {
+move_up;
+};
+};
+for ($i from 1 to 7) {
+move_right;
+};
+for ($i from 1 to 7) {
+move_down;
+};
+drop;
+move_right;
+move_right;
+move_right;
+move_right;
+pick;
+for ($i from 1 to 56) {
+move_left;
+};
+for ($i from 1 to 7) {
+move_up;
+};
+for ($i from 1 to 45) {
+for ($j from 1 to 15) {
+if (get_damage_level = 2) {
+sew;
+};
+move_down;
+};
+move_right;
+for ($j from 1 to 15) {
+move_up;
+};
+};
+for ($i from 1 to 11) {
+move_right;
+};
+for ($i from 1 to 7) {
+move_down;
+};
+drop;
+move_left;
+move_left;
+pick;
+for ($i from 1 to 54) {
+move_left;
+};
+for ($i from 1 to 7) {
+move_up;
+};
+for ($i from 1 to 45) {
+for ($j from 1 to 15) {
+if (get_damage_level = 2) {
+patch;
+};
+move_down;
+};
+move_right;
+for ($j from 1 to 15) {
+move_up;
+};
+};
+}
