@@ -74,7 +74,7 @@ namespace RTOS
                     {
                         var uvar = trimmed.MySubstring(1, trimmed.IndexOf(" is"));
                         Storage.UserVars[uvar] = Helper.Expression(trimmed.MySubstring(trimmed.IndexOf(" is") + 4,trimmed.Length-1));
-                        WriteLog($"{uvar} IS {Storage.UserVars[uvar]} NOW");
+                        //WriteLog($"{uvar} IS {Storage.UserVars[uvar]} NOW");
                     }
                     else
                     {
