@@ -23,9 +23,13 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="Execute" Content="Execute" HorizontalAlignment="Left" Margin="963,670,0,0" VerticalAlignment="Top" Width="309" Height="49" Click="Execute_Click"/>
-        <Canvas x:Name="MainCanvas" HorizontalAlignment="Left" Height="450" Margin="10,170,0,0" VerticalAlignment="Top" Width="1200" Grid.ColumnSpan="2">
+        <Canvas x:Name="MainCanvas" HorizontalAlignment="Left" Height="500" Margin="10,170,0,0" VerticalAlignment="Top" Width="1200" Grid.ColumnSpan="2">
             <Rectangle x:Name="HumanTable" Fill="#FFF7837E" Height="300" Canvas.Left="10" Stroke="Black" Canvas.Top="10" Width="900"/>
             <Image x:Name="ImgHand" Height="100" Source="Hand.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="20"/>
+            <Image x:Name="ImgScalpel" Height="100" Source="Scalpel.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="140"/>
+            <Image x:Name="ImgPatch" Height="100" Source="Patch.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="260"/>
+            <Image x:Name="ImgNeedle" Height="100" Source="Needle.png" Stretch="Fill" Width="100" Canvas.Left="1080" Canvas.Top="380"/>
+
         </Canvas>
 
     </Grid>

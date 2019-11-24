@@ -50,8 +50,8 @@ namespace RTOS
             Executed.Document.Blocks.Add(new Paragraph(new Run("Executed:")));
             Executed.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText(log))));
 
-            VisualizationWindow v = new VisualizationWindow();
-            v.Show();
+            //VisualizationWindow v = new VisualizationWindow();
+            //v.Show();
         }
 
         private void Execute_Click(object sender, RoutedEventArgs e)
