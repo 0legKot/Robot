@@ -35,6 +35,30 @@ namespace RTOS
                 for (int j = 0; j < 13; j++)
                 {
                     SituationInfo.humanMap[j + 1, i] = int.Parse(elements[j] == "" ? "0" : elements[j]);
+                    if (SituationInfo.humanMap[j + 1, i] != 0)
+                    {
+                        SolidColorBrush brush = Brushes.Yellow;
+                        switch (SituationInfo.humanMap[j + 1, i])
+                        {
+                            case 2: brush = Brushes.Red; 
+                                break;
+                            case 3:
+                                brush = Brushes.Black;
+                                break;
+                        }
+                        Rectangle myRect = new Rectangle
+                        {
+                            Stroke = brush,
+                            Fill = brush,
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 20,
+                            Width = 20
+                        };
+                        Canvas.SetLeft(myRect, 40 + i * 20);
+                        Canvas.SetTop(myRect, 40 + j * 20);
+                        MainCanvas.Children.Add(myRect);
+                    }
                 }
             }
             SituationInfo.SetHandX(54);
