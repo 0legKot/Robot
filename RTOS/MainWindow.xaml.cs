@@ -104,7 +104,7 @@ namespace RTOS
                         SituationInfo.InstrumentPicked = Instruments.None;
                         break;
                     case "cut":
-                        if (SituationInfo.InstrumentPicked == Instruments.Scalpel || true)
+                        if (SituationInfo.InstrumentPicked == Instruments.Scalpel)
                         {
                             Line line1 = new Line
                             {
