@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="SituationInfo.cs" />
     <Compile Include="Storage.cs" />
+    <Compile Include="Executor.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

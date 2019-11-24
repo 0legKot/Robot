@@ -51,8 +51,15 @@ namespace RTOS
             //Executed.Document.Blocks.Add(new Paragraph(new Run("Executed:")));
             //Executed.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText(log))));
 
-            VisualizationWindow v = new VisualizationWindow();
-            v.Show();
+            Executor timer = new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1));
+            timer.Start();
+        }
+
+        private string[] GetParsedCommands()
+        {
+            var toexec = File.ReadAllText(log);
+            string[] commands = toexec.Split('\n');
+            return commands;
         }
 
         private void Execute_Click(object sender, RoutedEventArgs e)
