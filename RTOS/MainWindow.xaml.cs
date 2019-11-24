@@ -55,8 +55,8 @@ namespace RTOS
                             Height = 20,
                             Width = 20
                         };
-                        Canvas.SetLeft(myRect, 40 + i * 20);
-                        Canvas.SetTop(myRect, 40 + j * 20);
+                        Canvas.SetLeft(myRect,  i * 20);
+                        Canvas.SetTop(myRect, j * 20);
                         MainCanvas.Children.Add(myRect);
                     }
                 }

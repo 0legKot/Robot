@@ -24,7 +24,7 @@
         </RichTextBox>
         <Button x:Name="Execute" Content="Execute" HorizontalAlignment="Left" Margin="963,670,0,0" VerticalAlignment="Top" Width="309" Height="49" Click="Execute_Click"/>
         <Canvas x:Name="MainCanvas" HorizontalAlignment="Left" Height="500" Margin="10,170,0,0" VerticalAlignment="Top" Width="1200" Grid.ColumnSpan="2">
-            <Rectangle x:Name="HumanTable" Fill="#FFF7837E" Height="300" Canvas.Left="20" Stroke="Black" Canvas.Top="20" Width="920"/>
+            <Rectangle x:Name="HumanTable" Fill="#FFF7837E" Height="270" Canvas.Left="0" Stroke="Black" Canvas.Top="0" Width="910"/>
             <Rectangle x:Name="InstrumentsTable" Fill="#FFC4BDF0" Height="140" Canvas.Left="1020" Stroke="Black" Canvas.Top="120" Width="160"/>
             <Image x:Name="ImgScalpel" Height="100" Source="Scalpel.png" Stretch="Fill" Width="40" Canvas.Left="1040" Canvas.Top="140"/>
             <Image x:Name="ImgPatch" Height="100" Source="Patch.png" Stretch="Fill" Width="40" Canvas.Left="1080" Canvas.Top="140"/>
