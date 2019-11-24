@@ -25,6 +25,7 @@ namespace RTOS
         const string log = "..\\Log.txt";
         const string human = "..\\Human.csv";
         const int shift = 1;
+        Executor timer;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace RTOS
             //Executed.Document.Blocks.Add(new Paragraph(new Run("Executed:")));
             //Executed.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText(log))));
 
-            Executor timer = new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1));
+            timer = new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1), Executed);
             timer.Start();
         }
 
