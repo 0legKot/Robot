@@ -14,15 +14,19 @@ namespace RTOS
 {
     public class Executor
     {
-        private string[] Commands { get; set; }
+        private Stack<string[]> Commands { get; set; } = new Stack<string[]>();
 
         private RichTextBox Log { get; }
+
         private readonly MainWindow main;
-        private int CurrentIndex { get; set; } = 0;
+        private Stack<int> CurrentIndices { get; set; } = new Stack<int>();
         private DispatcherTimer Timer { get; }
+
+        private ExecutorState State { get; set; } = ExecutorState.Normal;
         public Executor(string[] commands, TimeSpan interval, RichTextBox log,MainWindow _main)
         {
-            Commands = (string[])commands.Clone();
+            Commands.Push((string[])commands.Clone());
+            CurrentIndices.Push(0);
             Log = log;
             main = _main;
             Timer = new DispatcherTimer
@@ -38,15 +42,29 @@ namespace RTOS
             LogText("Program started");
         }
 
-        public void LoadProgram(string[] commands)
+        public void LoadInterruptionHandlingProgram(string[] commands)
         {
-            if (Timer.IsEnabled)
+            Timer.Stop();
+
+            Commands.Push(commands);
+            CurrentIndices.Push(0);
+
+            Timer.Start();
+        }
+
+        public void ClearInterruptions()
+        {
+            if (Commands.Count == 1)
             {
-                throw new Exception("Execution in process");
+                return;
             }
 
-            Commands = commands;
-            CurrentIndex = 0;
+            Timer.Stop();
+
+            State = ExecutorState.Reverse;
+            LogText("Interruptions cleared, resuming work");
+
+            Timer.Start();
         }
 
         public void Stop()
@@ -63,15 +81,78 @@ namespace RTOS
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (CurrentIndex < Commands.Length)
+            if (State == ExecutorState.Normal)
             {
-                ProcessCommand(Commands[CurrentIndex]);
-                ++CurrentIndex;
+                var index = CurrentIndices.Peek();
+                if (CurrentIndices.Peek() < Commands.Peek().Length)
+                {
+                    ProcessCommand(Commands.Peek()[index]);
+                    CurrentIndices.Pop();
+                    CurrentIndices.Push(index + 1);
+                }
+                else
+                {
+                    //MessageBox.Show("Program finished");
+                    Timer.Stop();
+                }
             }
-            else
+            else if (State == ExecutorState.Reverse)
+            {             
+
+                string command = "";
+                do
+                {
+                    var index = CurrentIndices.Peek() - 1;
+
+                    if (index < 0)
+                    {
+                        CurrentIndices.Pop();
+                        Commands.Pop();
+                        LogText("State recovered");
+
+                        if (CurrentIndices.Count == 1)
+                        {
+                            State = ExecutorState.Normal;
+                            LogText("Resuming execution");
+                            return; //goto timer_tick
+                        }
+                    }
+                    else
+                    {
+                        command = InvertCommand(Commands.Peek()[index]);
+                        CurrentIndices.Pop();
+                        CurrentIndices.Push(index);
+                    }
+                } while (command == "");
+
+                ProcessCommand(command);
+            } 
+        }
+        private string InvertCommand(string command)
+        {
+            if (command.Trim() == "") return "";
+
+            switch (command.Trim().Substring(0, command.Length - 1))
             {
-                //MessageBox.Show("Program finished");
-                Timer.Stop();
+                case "move_left":
+                    return "move_right;";
+                case "move_right":
+                    return "move_left;";
+                case "move_up":
+                    return "move_down;";
+                case "move_down":
+                    return "move_up;";
+                case "lower":
+                    return "rise;";
+                case "rise":
+                    return "lower;";
+                case "pick":
+                    return "drop;";
+                case "drop":
+                    return "pick;";
+                default:
+                    return "";
+
             }
         }
 
@@ -177,5 +258,13 @@ namespace RTOS
 
             LogText($"Executed {command}");
         }
+    }
+
+        
+
+        public enum ExecutorState
+    {
+        Normal,
+        Reverse
     }
 }

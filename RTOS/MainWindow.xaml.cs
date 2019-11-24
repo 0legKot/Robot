@@ -133,17 +133,24 @@ namespace RTOS
                 return;
             }
 
-            executor.Stop();
-
             var program = LoadInterruptionProgram(name);
-            executor.LoadProgram(program);
-            executor.Start();
+            executor.LoadInterruptionHandlingProgram(program);
         }
 
         private string[] LoadInterruptionProgram(string name)
         {
             string str = File.ReadAllText(interruptionProgramsDir + name + ".txt");
             return str.Split('\n', '\r').Where(s => s != "").ToArray();
+        }
+
+        private void BtnAllClear_Click(object sender, RoutedEventArgs e)
+        {
+            ImgFire1.Visibility = Visibility.Hidden;
+            ImgFire2.Visibility = Visibility.Hidden;
+            ImgFire3.Visibility = Visibility.Hidden;
+            ImgDoctor.Visibility = Visibility.Hidden;
+
+            executor.ClearInterruptions();
         }
     }
 }

@@ -40,6 +40,7 @@
         <Button x:Name="BtnPatientDying" Content="Patient state worsened" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="437,676,0,0" Click="BtnPatientDying_Click"/>
         <Button x:Name="BtnPatientConscious" Content="Patient consious" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="653,676,0,0" Click="BtnPatientConscious_Click"/>
         <Button x:Name="BtnFire" Content="FIRE" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="10,676,0,0" Click="BtnFire_Click"/>
+        <Button x:Name="BtnAllClear" Content="All clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="63" Height="49" Margin="867,676,0,0" Click="BtnAllClear_Click" />
 
     </Grid>
 </Window>
