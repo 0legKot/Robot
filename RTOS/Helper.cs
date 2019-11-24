@@ -128,7 +128,7 @@ namespace RTOS
             if (something == "get_current_time")
                 return (int)sw.ElapsedMilliseconds;
             if (something == "get_damage_level")
-                return Math.Min((SituationInfo.HandX<45&&SituationInfo.HandY<15)?SituationInfo.humanMap[SituationInfo.HandX, SituationInfo.HandY]:-1,0); 
+                return Math.Min((SituationInfo.GetHandX() < 45&&SituationInfo.GetHandY() < 15)?SituationInfo.humanMap[SituationInfo.GetHandX(), SituationInfo.GetHandY()] :-1,0); 
             if (something.StartsWith("$"))
             {
                 return Storage.UserVars[something.Substring(1)];
