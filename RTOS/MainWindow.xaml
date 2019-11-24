@@ -33,6 +33,8 @@
             <Image Panel.ZIndex="10" x:Name="ImgFire1" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="0" Canvas.Top="-32" Visibility="Hidden"/>
             <Image Panel.ZIndex="10" x:Name="ImgFire2" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="250" Canvas.Top="-32" Visibility="Hidden"/>
             <Image Panel.ZIndex="10" x:Name="ImgFire3" Height="323" Source="Fire.png" Stretch="Fill" Width="492" Canvas.Left="500" Canvas.Top="-32" Visibility="Hidden"/>
+            <Image Panel.ZIndex="10" x:Name="ImgDoctor" Height="323" Source="Doctor.png" Stretch="Fill" Width="492" Canvas.Left="87" Canvas.Top="140" Visibility="Hidden"/>
+
         </Canvas>
         <Button x:Name="BtnHumanEntered" Content="Human entered" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="223,676,0,0" Click="BtnHumanEntered_Click"/>
         <Button x:Name="BtnPatientDying" Content="Patient state worsened" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Height="49" Margin="437,676,0,0" Click="BtnPatientDying_Click"/>

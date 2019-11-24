@@ -95,6 +95,7 @@ namespace RTOS
 
         private void BtnHumanEntered_Click(object sender, RoutedEventArgs e)
         {
+            ImgDoctor.Visibility = Visibility.Visible;
             HandleInterrupt("human_entered");
         }
 
