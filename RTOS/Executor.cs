@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace RTOS
@@ -15,14 +17,18 @@ namespace RTOS
         private string[] Commands { get; }
 
         private RichTextBox Log { get; }
+        private readonly MainWindow main;
         private int CurrentIndex { get; set; } = 0;
         private DispatcherTimer Timer { get; }
-        public Executor(string[] commands, TimeSpan interval, RichTextBox log)
+        public Executor(string[] commands, TimeSpan interval, RichTextBox log,MainWindow _main)
         {
             Commands = (string[])commands.Clone();
             Log = log;
-            Timer = new DispatcherTimer();
-            Timer.Interval = interval;
+            main = _main;
+            Timer = new DispatcherTimer
+            {
+                Interval = interval
+            };
             Timer.Tick += Timer_Tick; 
         }
 
@@ -61,7 +67,7 @@ namespace RTOS
         {
             if (command.Trim() == "") return;
 
-            var shift = 20;
+            var shift = 1;
 
             switch (command.Trim().Substring(0, command.Length - 1))
             {
@@ -77,14 +83,14 @@ namespace RTOS
                 case "move_down":
                     SituationInfo.SetHandY(SituationInfo.GetHandY() + shift);
                     break;
-                //case "lower":
-                //    ImgHand.Height -= shift * 20;
-                //    ImgHand.Width -= shift * 20;
-                //    break;
-                //case "rise":
-                //    ImgHand.Height += shift * 20;
-                //    ImgHand.Width += shift * 20;
-                //    break;
+                case "lower":
+                    main.ImgHand.Height -= shift * 20;
+                    main.ImgHand.Width -= shift * 20;
+                    break;
+                case "rise":
+                    main.ImgHand.Height += shift * 20;
+                    main.ImgHand.Width += shift * 20;
+                    break;
                 case "pick":
                     if (SituationInfo.ScalpelX == SituationInfo.GetHandX() && SituationInfo.ScalpelY == SituationInfo.GetHandY())
                         SituationInfo.InstrumentPicked = Instruments.Scalpel;
@@ -96,81 +102,61 @@ namespace RTOS
                 case "drop":
                     SituationInfo.InstrumentPicked = Instruments.None;
                     break;
-                //case "cut":
-                //    if (SituationInfo.InstrumentPicked == Instruments.Scalpel || true)
-                //    {
-                //        Line line1 = new Line
-                //        {
-                //            StrokeThickness = 6,
-                //            Stroke = Brushes.Red,
-                //            X1 = SituationInfo.GetHandX() * 20,
-                //            X2 = SituationInfo.GetHandX() * 20 + 20,
-                //            Y1 = SituationInfo.GetHandY() * 20,
-                //            Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        };
-                //        //Line line2 = new Line
-                //        //{
-                //        //    StrokeThickness = 4,
-                //        //    Stroke = Brushes.Red,
-                //        //    X1 = SituationInfo.GetHandX() * 20 + 20,
-                //        //    X2 = SituationInfo.GetHandX() * 20,
-                //        //    Y1 = SituationInfo.GetHandY() * 20,
-                //        //    Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        //};
-                //        MainCanvas.Children.Add(line1);
-                //        //MainCanvas.Children.Add(line2);
-                //    }
-                //    break;
-                //case "sew":
-                //    if (SituationInfo.InstrumentPicked == Instruments.Needle || true)
-                //    {
-                //        Line line3 = new Line
-                //        {
-                //            StrokeThickness = 3,
-                //            Stroke = Brushes.BlueViolet,
-                //            X1 = SituationInfo.GetHandX() * 20,
-                //            X2 = SituationInfo.GetHandX() * 20 + 20,
-                //            Y1 = SituationInfo.GetHandY() * 20,
-                //            Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        };
-                //        Line line4 = new Line
-                //        {
-                //            StrokeThickness = 3,
-                //            Stroke = Brushes.BlueViolet,
-                //            X1 = SituationInfo.GetHandX() * 20 + 20,
-                //            X2 = SituationInfo.GetHandX() * 20,
-                //            Y1 = SituationInfo.GetHandY() * 20,
-                //            Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        };
-                //        MainCanvas.Children.Add(line3);
-                //        MainCanvas.Children.Add(line4);
-                //    }
-                //    break;
-                //case "patch":
-                //    if (SituationInfo.InstrumentPicked == Instruments.Needle || true)
-                //    {
-                //        Line line5 = new Line
-                //        {
-                //            StrokeThickness = 6,
-                //            Stroke = Brushes.Orange,
-                //            X1 = SituationInfo.GetHandX() * 20,
-                //            X2 = SituationInfo.GetHandX() * 20 + 20,
-                //            Y1 = SituationInfo.GetHandY() * 20,
-                //            Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        };
-                //        //Line line6 = new Line
-                //        //{
-                //        //    StrokeThickness = 3,
-                //        //    Stroke = Brushes.Orange,
-                //        //    X1 = SituationInfo.GetHandX() * 20 + 20,
-                //        //    X2 = SituationInfo.GetHandX() * 20,
-                //        //    Y1 = SituationInfo.GetHandY() * 20,
-                //        //    Y2 = SituationInfo.GetHandY() * 20 + 20
-                //        //};
-                //        MainCanvas.Children.Add(line5);
-                //        //MainCanvas.Children.Add(line6);
-                //    }
-                //    break;
+                case "cut":
+                    if (SituationInfo.InstrumentPicked == Instruments.Scalpel || true)
+                    {
+                        Line line1 = new Line
+                        {
+                            StrokeThickness = 6,
+                            Stroke = Brushes.Red,
+                            X1 = SituationInfo.GetHandX() * 20,
+                            X2 = SituationInfo.GetHandX() * 20 + 20,
+                            Y1 = SituationInfo.GetHandY() * 20,
+                            Y2 = SituationInfo.GetHandY() * 20 + 20
+                        };
+                        main.MainCanvas.Children.Add(line1);
+                    }
+                    break;
+                case "sew":
+                    if (SituationInfo.InstrumentPicked == Instruments.Needle || true)
+                    {
+                        Line line3 = new Line
+                        {
+                            StrokeThickness = 3,
+                            Stroke = Brushes.BlueViolet,
+                            X1 = SituationInfo.GetHandX() * 20,
+                            X2 = SituationInfo.GetHandX() * 20 + 20,
+                            Y1 = SituationInfo.GetHandY() * 20,
+                            Y2 = SituationInfo.GetHandY() * 20 + 20
+                        };
+                        Line line4 = new Line
+                        {
+                            StrokeThickness = 3,
+                            Stroke = Brushes.BlueViolet,
+                            X1 = SituationInfo.GetHandX() * 20 + 20,
+                            X2 = SituationInfo.GetHandX() * 20,
+                            Y1 = SituationInfo.GetHandY() * 20,
+                            Y2 = SituationInfo.GetHandY() * 20 + 20
+                        };
+                        main.MainCanvas.Children.Add(line3);
+                        main.MainCanvas.Children.Add(line4);
+                    }
+                    break;
+                case "patch":
+                    if (SituationInfo.InstrumentPicked == Instruments.Needle || true)
+                    {
+                        Line line5 = new Line
+                        {
+                            StrokeThickness = 6,
+                            Stroke = Brushes.Orange,
+                            X1 = SituationInfo.GetHandX() * 20,
+                            X2 = SituationInfo.GetHandX() * 20 + 20,
+                            Y1 = SituationInfo.GetHandY() * 20,
+                            Y2 = SituationInfo.GetHandY() * 20 + 20
+                        };
+                        main.MainCanvas.Children.Add(line5);
+                    }
+                    break;
                 case "call_human":
                     MessageBox.Show("Human called");
                     break;              
