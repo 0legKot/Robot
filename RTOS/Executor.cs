@@ -70,7 +70,7 @@ namespace RTOS
             }
             else
             {
-                MessageBox.Show("Program finished");
+                //MessageBox.Show("Program finished");
                 Timer.Stop();
             }
         }

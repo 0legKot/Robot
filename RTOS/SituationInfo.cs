@@ -36,6 +36,12 @@ namespace RTOS
 
         public static void SetHandY(int value)
         {
+            if (InstrumentPicked == Instruments.Scalpel)
+                Canvas.SetTop(mainWindow.ImgScalpel, value * shift);
+            if (InstrumentPicked == Instruments.Needle)
+                Canvas.SetTop(mainWindow.ImgNeedle, value * shift);
+            if (InstrumentPicked == Instruments.Patch)
+                Canvas.SetTop(mainWindow.ImgPatch, value * shift);
             Canvas.SetTop(mainWindow.ImgHand, value * shift);
         }
 

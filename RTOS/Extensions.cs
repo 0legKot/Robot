@@ -73,11 +73,29 @@ namespace RTOS
                     if (trimmed.Contains(" is"))
                     {
                         var uvar = trimmed.MySubstring(1, trimmed.IndexOf(" is"));
-                        Storage.UserVars[uvar] = Helper.Expression(trimmed.MySubstring(trimmed.IndexOf(" is") + 4,trimmed.Length-1));
+                        Storage.UserVars[uvar] = Helper.Expression(trimmed.MySubstring(trimmed.IndexOf(" is") + 4, trimmed.Length - 1));
                         //WriteLog($"{uvar} IS {Storage.UserVars[uvar]} NOW");
                     }
                     else
                     {
+                        switch (trimmed.Substring(0, trimmed.Length - 1))
+                        {
+                            case "move_left":
+                                SituationInfo.SetHandX(SituationInfo.GetHandX() - 1);
+                                break;
+                            case "move_right":
+                                SituationInfo.SetHandX(SituationInfo.GetHandX() + 1);
+                                break;
+                            case "move_up":
+                                SituationInfo.SetHandY(SituationInfo.GetHandY() - 1);
+                                break;
+                            case "move_down":
+                                SituationInfo.SetHandY(SituationInfo.GetHandY() + 1);
+                                break;
+                            case "cut":
+                                SituationInfo.humanMap[SituationInfo.GetHandY(), SituationInfo.GetHandX()] -= 1;
+                                break;
+                        }
                         WriteLog(trimmed);
                     }
                     continue;

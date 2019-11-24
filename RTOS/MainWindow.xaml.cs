@@ -36,16 +36,25 @@ namespace RTOS
                 string[] elements = humanTxt[i].Split(';');
                 for (int j = 0; j < 13; j++)
                 {
-                    SituationInfo.humanMap[j + 1, i] = int.Parse(elements[j] == "" ? "0" : elements[j]);
-                    if (SituationInfo.humanMap[j + 1, i] != 0)
+                    SituationInfo.humanMap[j, i] = int.Parse(elements[j] == "" ? "0" : elements[j]);
+                    if (SituationInfo.humanMap[j, i] != 0)
                     {
                         SolidColorBrush brush = Brushes.Yellow;
-                        switch (SituationInfo.humanMap[j + 1, i])
+                        switch (SituationInfo.humanMap[j , i])
                         {
-                            case 2: brush = Brushes.Red; 
+                            case -1:
+                                brush = Brushes.Blue;
+                                break;
+                            case -2:
+                                brush = Brushes.Red;
+                                break;
+                            case 2: brush = Brushes.Crimson; 
                                 break;
                             case 3:
-                                brush = Brushes.Black;
+                            case 4:
+                            case 5:
+                            case 6:
+                                brush = Brushes.Brown;
                                 break;
                         }
                         Rectangle myRect = new Rectangle
@@ -70,18 +79,25 @@ namespace RTOS
             File.WriteAllText(log, "");
             Program.Document.Blocks.Clear();
             Program.Document.Blocks.Add(new Paragraph(new Run(program)));
-            program.Substring(1, program.Length - 2).GetBlocks(out _).Execute();
+            //program.Substring(1, program.Length - 2).GetBlocks(out _).Execute();
             Executed.Document.Blocks.Clear();
         }
 
         private string[] GetParsedCommands()
         {
+            TextRange textRange = new TextRange(
+                Program.Document.ContentStart,
+                Program.Document.ContentEnd
+            );
+            textRange.Text.Substring(1, textRange.Text.Length - 4).GetBlocks(out _).Execute();
             return File.ReadAllText(log).Split('\n').Select(x=>x.Trim()).Where(x=>x!="").ToArray();
         }
 
         private void Execute_Click(object sender, RoutedEventArgs e)
         {
-            executor = new Executor(GetParsedCommands(), TimeSpan.FromSeconds(1), Executed, this);
+            executor = new Executor(GetParsedCommands(), TimeSpan.FromMilliseconds(1), Executed, this);
+            SituationInfo.SetHandX(54);
+            SituationInfo.SetHandY(1);
             executor.Start();
         }
 
