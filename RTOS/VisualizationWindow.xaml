@@ -1,0 +1,31 @@
+﻿<Window x:Class="RTOS.VisualizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RTOS"
+        mc:Ignorable="d"
+        Title="VisualizationWindow" Height="450" Width="686">
+    <Grid Margin="0,0,3.8,0">
+        <Canvas x:Name="MyCanvas" HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="489" Background="#FFE4F8FF">
+            <Rectangle x:Name="RobotRect" Fill="#FF69C800" HorizontalAlignment="Left" Height="58" Stroke="Black" VerticalAlignment="Top" Width="58" RenderTransformOrigin="0.5,0.5" Canvas.Left="358" Canvas.Top="319" Panel.ZIndex="3">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="12"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle x:Name="TableRect" Fill="#FFFAFFBD" HorizontalAlignment="Left" Height="94" Stroke="Black" VerticalAlignment="Top" Width="209" Canvas.Left="270" Canvas.Top="10"/>
+            <Rectangle x:Name="ScalpelRect" Fill="#FFF4F4F5" Height="41" Canvas.Left="310" Stroke="Black" Canvas.Top="52" Width="5"/>
+            <Image x:Name="HumanIMG" Height="352" Canvas.Left="22" Canvas.Top="36" Width="220" Source="human.png" Panel.ZIndex="2"/>
+        </Canvas>
+        <RadioButton x:Name="rbScalpel" Content="Is scalpel in hand" HorizontalAlignment="Left" Margin="499,25,0,0" VerticalAlignment="Top" IsEnabled="False" Height="18" Width="143" FontFamily="Sitka Small"/>
+        <Button x:Name="btnExec" Content="Button" HorizontalAlignment="Left" Height="51" Margin="536,193,0,0" VerticalAlignment="Top" Width="106" Click="BtnExec_Click"/>
+        <TextBox x:Name="txtBox" HorizontalAlignment="Left" Height="24" Margin="519,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102" FontFamily="Sitka Small"/>
+        <RadioButton x:Name="rbHumanCall" Content="Call human" HorizontalAlignment="Left" Height="28" Margin="514,285,0,0" VerticalAlignment="Top" Width="107" IsEnabled="False" Background="#FFBA0000" FontFamily="Sitka Small"/>
+
+    </Grid>
+</Window>
