@@ -21,67 +21,74 @@ namespace RTOS
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string path = "..\\Program.txt";
-        const string log = "..\\Log.txt";
-        const string human = "..\\Human.csv";
-        const string interruptionProgramsDir = "..\\..\\InterruptionHandling\\";
         const string logDir = "..\\Log\\";
+        const string path = ".\\Data\\Program.txt";
+        const string log = ".\\Data\\Log.txt";
+        const string human = ".\\Data\\Human.csv";
+        const string interruptionProgramsDir = "..\\InterruptionHandling\\";
         Executor executor;
         public MainWindow()
         {
-            InitializeComponent();
-            SituationInfo.mainWindow = this;
-            string[] humanTxt = File.ReadLines(human).ToArray();
-            for (int i = 0; i < 44; i++)
+            try
             {
-                string[] elements = humanTxt[i].Split(';');
-                for (int j = 0; j < 13; j++)
+                InitializeComponent();
+                SituationInfo.mainWindow = this;
+                string[] humanTxt = File.ReadLines(human).ToArray();
+                for (int i = 0; i < 44; i++)
                 {
-                    SituationInfo.humanMap[j, i] = int.Parse(elements[j] == "" ? "0" : elements[j]);
-                    if (SituationInfo.humanMap[j, i] != 0)
+                    string[] elements = humanTxt[i].Split(';');
+                    for (int j = 0; j < 13; j++)
                     {
-                        SolidColorBrush brush = Brushes.Yellow;
-                        switch (SituationInfo.humanMap[j , i])
+                        SituationInfo.humanMap[j, i] = int.Parse(elements[j] == "" ? "0" : elements[j]);
+                        if (SituationInfo.humanMap[j, i] != 0)
                         {
-                            case -1:
-                                brush = Brushes.Blue;
-                                break;
-                            case -2:
-                                brush = Brushes.Red;
-                                break;
-                            case 2: brush = Brushes.Crimson; 
-                                break;
-                            case 3:
-                            case 4:
-                            case 5:
-                            case 6:
-                                brush = Brushes.Brown;
-                                break;
+                            SolidColorBrush brush = Brushes.Yellow;
+                            switch (SituationInfo.humanMap[j, i])
+                            {
+                                case -1:
+                                    brush = Brushes.Blue;
+                                    break;
+                                case -2:
+                                    brush = Brushes.Red;
+                                    break;
+                                case 2:
+                                    brush = Brushes.Crimson;
+                                    break;
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                    brush = Brushes.Brown;
+                                    break;
+                            }
+                            Rectangle myRect = new Rectangle
+                            {
+                                Stroke = brush,
+                                Fill = brush,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Height = 20,
+                                Width = 20
+                            };
+                            Canvas.SetLeft(myRect, i * 20);
+                            Canvas.SetTop(myRect, j * 20);
+                            MainCanvas.Children.Add(myRect);
                         }
-                        Rectangle myRect = new Rectangle
-                        {
-                            Stroke = brush,
-                            Fill = brush,
-                            HorizontalAlignment = HorizontalAlignment.Left,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Height = 20,
-                            Width = 20
-                        };
-                        Canvas.SetLeft(myRect,  i * 20);
-                        Canvas.SetTop(myRect, j * 20);
-                        MainCanvas.Children.Add(myRect);
                     }
                 }
-            }
-            SituationInfo.SetHandX(54);
-            SituationInfo.SetHandY(1);
+                SituationInfo.SetHandX(54);
+                SituationInfo.SetHandY(1);
 
-            var program = File.ReadAllText(path);
-            File.WriteAllText(log, "");
-            Program.Document.Blocks.Clear();
-            Program.Document.Blocks.Add(new Paragraph(new Run(program)));
-            //program.Substring(1, program.Length - 2).GetBlocks(out _).Execute();
-            Executed.Document.Blocks.Clear();
+                var program = File.ReadAllText(path);
+                File.WriteAllText(log, "");
+                Program.Document.Blocks.Clear();
+                Program.Document.Blocks.Add(new Paragraph(new Run(program)));
+                //program.Substring(1, program.Length - 2).GetBlocks(out _).Execute();
+                Executed.Document.Blocks.Clear();
+            }
+            catch {
+                MessageBox.Show("Config files are missing");
+            }
         }
 
         private string[] GetParsedCommands()
@@ -96,12 +103,20 @@ namespace RTOS
 
         private void Execute_Click(object sender, RoutedEventArgs e)
         {
-            Directory.CreateDirectory(logDir);
-            var logger = new CsvFileLogger(logDir + DateTime.Now.ToString().Replace(':', '-') + ".csv");
-            executor = new Executor(GetParsedCommands(), TimeSpan.FromMilliseconds(1), logger, this);
-            SituationInfo.SetHandX(54);
-            SituationInfo.SetHandY(1);
-            executor.Start();
+            try
+            {
+                Directory.CreateDirectory(logDir);
+                var logger = new CsvFileLogger(logDir + DateTime.Now.ToString().Replace(':', '-') + ".csv");
+                executor = new Executor(GetParsedCommands(), TimeSpan.FromMilliseconds(1), logger, this);
+                SituationInfo.SetHandX(54);
+                SituationInfo.SetHandY(1);
+                executor.Start();
+            }
+            catch {
+                SituationInfo.SetHandX(54);
+                SituationInfo.SetHandY(1);
+                MessageBox.Show("Compilation error");
+            }
         }
 
         private void BtnFire_Click(object sender, RoutedEventArgs e)

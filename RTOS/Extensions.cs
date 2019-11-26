@@ -8,7 +8,7 @@ namespace RTOS
 {
     public static class Extensions
     {
-        const string log = "..\\Log.txt";
+        const string log = ".\\Data\\Log.txt";
         public static string MySubstring(this string input, int start, int end)
         {
             return input.Substring(start, end - start);
