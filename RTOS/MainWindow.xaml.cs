@@ -24,7 +24,8 @@ namespace RTOS
         const string path = "..\\Program.txt";
         const string log = "..\\Log.txt";
         const string human = "..\\Human.csv";
-        const string interruptionProgramsDir = "..\\..\\InterruptionHandling/";
+        const string interruptionProgramsDir = "..\\..\\InterruptionHandling\\";
+        const string logDir = "..\\Log\\";
         Executor executor;
         public MainWindow()
         {
@@ -95,7 +96,9 @@ namespace RTOS
 
         private void Execute_Click(object sender, RoutedEventArgs e)
         {
-            executor = new Executor(GetParsedCommands(), TimeSpan.FromMilliseconds(1), Executed, this);
+            Directory.CreateDirectory(logDir);
+            var logger = new CsvFileLogger(logDir + DateTime.Now.ToString().Replace(':', '-') + ".csv");
+            executor = new Executor(GetParsedCommands(), TimeSpan.FromMilliseconds(1), logger, this);
             SituationInfo.SetHandX(54);
             SituationInfo.SetHandY(1);
             executor.Start();
@@ -134,7 +137,7 @@ namespace RTOS
             }
 
             var program = LoadInterruptionProgram(name);
-            executor.LoadInterruptionHandlingProgram(program);
+            executor.LoadInterruptionHandlingProgram(program, name);
         }
 
         private string[] LoadInterruptionProgram(string name)

@@ -16,18 +16,18 @@ namespace RTOS
     {
         private Stack<string[]> Commands { get; set; } = new Stack<string[]>();
 
-        private RichTextBox Log { get; }
+        private ILogger Logger { get; }
 
         private readonly MainWindow main;
         private Stack<int> CurrentIndices { get; set; } = new Stack<int>();
         private DispatcherTimer Timer { get; }
 
         private ExecutorState State { get; set; } = ExecutorState.Normal;
-        public Executor(string[] commands, TimeSpan interval, RichTextBox log,MainWindow _main)
+        public Executor(string[] commands, TimeSpan interval, ILogger logger, MainWindow _main)
         {
             Commands.Push((string[])commands.Clone());
             CurrentIndices.Push(0);
-            Log = log;
+            Logger = logger;
             main = _main;
             Timer = new DispatcherTimer
             {
@@ -42,10 +42,11 @@ namespace RTOS
             LogText("Program started");
         }
 
-        public void LoadInterruptionHandlingProgram(string[] commands)
+        public void LoadInterruptionHandlingProgram(string[] commands, string interruptName)
         {
             Timer.Stop();
 
+            LogText(interruptName, LogLevel.Interrupt);
             Commands.Push(commands);
             CurrentIndices.Push(0);
             State = ExecutorState.Normal;
@@ -63,7 +64,7 @@ namespace RTOS
             Timer.Stop();
 
             State = ExecutorState.Reverse;
-            LogText("Interruptions cleared, resuming work");
+            LogText("Interruptions cleared, recovering state", LogLevel.Interrupt);
 
             Timer.Start();
         }
@@ -74,10 +75,9 @@ namespace RTOS
             LogText("Program stopped");
         }
 
-        private void LogText(string text)
+        private void LogText(string text, LogLevel level = LogLevel.Info)
         {
-            Log.Document.Blocks.Add(new Paragraph(new Run(text)));
-            Log.ScrollToEnd();
+            Logger.Log(text, level);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace RTOS
                 }
                 else
                 {
-                    //MessageBox.Show("Program finished");
+                    LogText("Program finished");
                     Timer.Stop();
                 }
             }
@@ -257,7 +257,7 @@ namespace RTOS
              
             }
 
-            LogText($"Executed {command}");
+            LogText($"Executed {command}", LogLevel.Debug);
         }
     }
 
